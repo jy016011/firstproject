@@ -96,3 +96,92 @@
 - `DELETE (FROM) 테이블 명 WHERE 조건;` ()는 생략가능 문구
 
 ---
+
+## 💾 9일차: CRUD와 SQL쿼리 종합
+
+### 1. JPA 로깅 설정하기
+
+- 로깅 레벨 7단계: 설정한 출력 레벨 이상의 모든 로그가 출력된다. 실습에서는 `DEBUG`단계로 설정.
+    - `TRACE`(레벨 1): `DEBUG`보다 상세한 정보
+    - `DEBUG`(레벨 2): 응용 프로그램을 디버깅하는데 필요한 세부 정보
+    - `INFO`(레벨 3): 응용 프로그램의 순조로운 진행정보(`spring.jpa.show-sql=true`로 설정시 기본값이 됨)
+    - `WARN`(레벨 4): 잠재적으로 유해한 상황정보
+    - `ERROR`(레벨 5): 응용 프로그램이 수행할 수 있는 정도의 오류 정보
+    - `FATAL`(레벨 6): 응옹 프로그램이 중단될 만한 심각한 오류 정보
+    - `OFF`(레벨 7): 로깅 해제
+- `format_sql=true`: SQL 쿼리에 줄바꿈 적용
+- `sql.BasicBinder=TRACE`: JPA 쿼리에서 DB로 넘어가는 매개변수 값 확인
+
+### 2. 쿼리로그 확인하기
+
+- id 자동 생성 전략 추가: 엔터티의 Primary key에 `@GeneratedValue(strategy = GenerationType=IDENTITY)`를 추가
+    - GenerationType 5가지
+        - `TABLE`: DB에 키 생성 전용 테이블을 만들고 이를 이용하여 키 생성
+        - `SEQUENCE`: DB의 특별한 시퀀스 오브젝트를 이용(지원안하는 DB도 있음)
+        - `IDENTITY`: DB에 기본 키 생성을 위임함(MySQL은 AUTO_INCREMENT 사용)
+        - `AUTO`: `@GeneratedValue`에 옵션 추가 안할 시 기본 값
+        - `UUID`: RFC 4122 UUID를 생성
+- 서버 시작시 `@Entity`에 해당하는 클래스를 기반으로 테이블들을 생성
+    - 로그상의 `CREATE`문으로 생성하는 것 확인 가능
+- 데이터 추가시에는 `INSERT`문
+- 데이터 조회시에는 `SELECTE`문
+- 데이터 수정시에는 `UPDATE`문
+- 데이터 삭제시에는 `DELETE`문
+
+### 3. 기본 SQL 쿼리 작성하기
+
+- 테이블 생성:
+
+```
+CREATE 테이블명(
+  속성명1 자료형,
+  속셩명2 자료형,
+  ...
+  PRIMARY KEY(기본키)
+);
+```
+
+- 데이터 추가:
+
+```
+INSERT 
+INTO 
+    테이블명
+    (속성명1, 속성명2, ...)  
+VALUES
+    (속성값1, 속성값2,...);
+```
+
+- 데이터 조회
+
+```
+SELECT
+    속성명1, 속성명2, ...
+FROM
+    테이블명
+WHERE
+    조건;
+```
+
+- 데이터 수정
+
+```
+UPDATE 
+    테이블명
+SET
+    (속성명1=속성값1, 속성명2=속성값2 ...)
+WHERE
+    조건;
+```
+
+- 데이터 삭제
+
+```
+DELETE
+(FROM) - 생략 가능
+    테이블명
+WHERE
+    조건;
+```
+
+---
