@@ -84,3 +84,49 @@
     - 해딩 메서드에 `@Transactional` 사용
 
 ---
+
+## 💬 14일차: 댓글 엔티티와 레퍼지터리 만들기
+
+### 1. 댓글 기능의 개요
+
+- 댓글과 게시판의 관계: 다대일 관계, 댓글에는 게시글의 PK(기본키)인 article.id를 FK(외래키)로 가짐
+- JPA에서 단순히 CRUD 작업만 한다면 CrudRepository로 충분하나, CRUD + 페이지 처리와 정렬 작업까지한다면 JpaRepository를 사용
+- JpaRepository: ListCrudRepository와 ListPagingAndSortingRepository를 상속받은 인터페이스
+    - CRUD 기능
+    - 엔터티를 페이지 단위로 조회 및 정렬하는 기능
+    - 이외 JPA 특화 기능 제공
+
+### 2. 댓글 엔터티 만들기
+
+- `@ManyToOne`: 엔터티와 필드가 가리키는 엔터티를 다대일 관계로 설정
+- `@JoinColumn`: name 속성으로 매핑할 외래키 이름을 지정하고 가리키는 엔터티의 기본키와 매핑하여 외래키 지정
+
+### 3. 댓글 리파지터리 만들기
+
+- 네이티브 쿼리 메서드: 직접 작성한 SQL 쿼리를 리파지터리 메서드로 실행할 수 있게 해줌
+    - `@Query`: JPQL이라는 객체 지향 쿼리 언어를 통해 복잡한 쿼리 처리 지원
+        - native 속성을 true로하면 기존 SQL문 사용 가능
+        - `WHERE`절의 조건 작성시 매개변수 앞에 콜론(`:`)를 붙여줘야함
+        - 예시
+          ```java
+          @Query(value = "SELECT * FROM comment WHERE article_id = :articleId, nativeQuery = true)
+          List<Comment> findByArticleId(Long articleId);
+          ```
+    - 네이티브 처리 XML: 메서드에서 수행할 쿼리를 XML로 작성한 것
+        - 경로 및 파일이름: `resources/META-INF/orm.xml`
+        - 예시
+          ```xml
+          <named-native-query
+                name="Comment.findByNickname"
+                result-class="com.example.firstproject.entity.Comment">
+          <query>
+            <![CDATA[
+                SELECT * FROM comment WHERE nickname = :nickname
+            ]]>
+          </query>
+          </named-native-query>
+          ```
+
+- `@DataJpaTest`: JPA와 연동한 테스트를 진행, 리파지터리와 엔터티 등의 객체를 테스트 코드에서 사용 가능
+
+---
