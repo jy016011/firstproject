@@ -103,7 +103,7 @@
 
 ---
 
-## 🛠️ 4일차: 롬복과 리팩터링
+## ⚒️ 4일차: 롬복과 리팩터링
 
 ### 1. 롬복이란?
 
@@ -506,5 +506,52 @@ WHERE
           ```
 
 - `@DataJpaTest`: JPA와 연동한 테스트를 진행, 리파지터리와 엔터티 등의 객체를 테스트 코드에서 사용 가능
+
+---
+
+## 🛠️ 15일차: 댓글 컨트롤러와 서비스 만들기
+
+### 1. 댓글 REST API의 개요
+
+- 예상 프로젝트 구조
+    1. 컨트롤러
+        - `api/CommentApiController`: 댓글 REST 컨트롤러
+    2. DTO, Entity
+        - `dto/CommentDto`: 댓글 JSON 데이터 전송
+        - `entity/Comment`: 서버와 DB간 데이터 매핑 및 로직 처리
+    3. Reposiroty
+        - `reposiroty/CommentReposiroty`: CRUD 지원 JAP 인터페이스
+    4. Service
+        - `service/CommentService`: 컨트롤러와 레퍼지터리 사이에서의 흐름 처리 및 트랜잭션 관리
+
+### 2. 댓글 컨트롤러와 서비스 틀 만들기
+
+- `CommentApiController`: `@RestController`선언
+- `CommentService`: `@Service`선언, `CommentRepository`, `ÀrticleRepository` 선언 후 `@Autowired`로 의존성 주입
+
+### 3. 댓글 조회(`GET`)
+
+- `ResponseEntity`에 `CommentDto`를 담아 반환
+- 실습 간에는 댓글 조회 실패시 SpringBoot가 예외처리 한다고 가정
+
+### 4. 댓글 생성(`POST`)
+
+- DB 내용을 바꾸는 생성은 `@Transactional` 기입
+- 예외처리
+    - DTO에 id가 이미 존재하는 경우(엔터티의 id는 DB가 알아서 생성하므로 없어야함)
+    - URL의 게시글 id와 dto의 게시글 id가 다른 경우
+- JSON 데이터의 키 이름과 DTO의 변수 명이 다를 경우 `@JsonProperty("키이름")`을 해당하는 DTO 필드 위에 작성
+
+### 5. 댓글 수정(`PATCH`)
+
+- DB 내용을 바꾸므로 `@Transactional` 기입
+- 예외처리
+    - URL의 댓글 id와 DTO의 댓글 id가 다를 경우
+
+### 6. 댓글 삭제하기(`DELETE`)
+
+- DB 내용을 바꾸므로 `@Transactional` 기입
+- 예외처리
+    - URL로 받은 id의 댓글이 존재하지 않는 경우
 
 ---
