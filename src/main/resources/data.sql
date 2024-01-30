@@ -31,3 +31,10 @@ INSERT INTO pizza (name, price) VALUES('불고기 피자', '29,900')
 INSERT INTO pizza (name, price) VALUES('고구마 피자', '30,900')
 INSERT INTO pizza (name, price) VALUES('포테이토 피자', '27,900')
 INSERT INTO pizza (name, price) VALUES('치즈 피자', '23,900')
+
+INSERT INTO soccer_group (name) VALUES('H조')
+
+INSERT INTO team (group_id, name, image_url) VALUES(1, '대한민국', '/images/korea_flag.jpeg')
+INSERT INTO team (group_id, name, image_url) VALUES(1, '포르투갈', '/images/portugal_flag.jpeg')
+INSERT INTO team (group_id, name, image_url) VALUES(1, '가나', '/images/ghana_flag.jpeg')
+INSERT INTO team (group_id, name, image_url) VALUES(1, '우루과이', '/images/uruguay_flag.jpeg')
