@@ -586,3 +586,52 @@ WHERE
 - `CommentService`를 통해 댓글 DTO 목록을 가져와 모델에 반영하여 최종적으로 뷰에 반영
 
 ---
+
+## 📝 17일차: 웹 페이지에서 댓글 등록하기
+
+### 1. 댓글 등록의 개요
+
+- 새 댓글을 등록하기 위한 뷰 페이지를 만들고 자바스크립트 코드로 REST API를 호출
+- REST API 요청을 보낼 때 사용하는 자바 스크립트 API
+    - `document.querySelector()`: 웹 페이지에서 특정 요소(버튼 등)를 찾아 반환
+    - `요소명.addEventListener()`: 특정 요소에 이벤트가 발생(버튼 클릭 등)했을 때 특정 동작(댓글 데이터 전달 등)을 수행
+    - `fetch()`: 웹 페이지에서 REST API요청(`POST`등)을 보냄
+
+### 2. 댓글 생성 뷰 페이지 만들기
+
+- 댓글은 부모 게시글의 id값을 가지고 있어어야 함
+    - 이를 위해 부모 게시글의 id를 히든 인풋으로 삽입
+        - 히든 인풋: 웹 페이지에 표시되지 않는 요소로 보이지는 않지만, 값을 가지고 있어야할 때 이용
+
+### 3. 자바스크립트로 댓글 달기
+
+- `document.querySelector()`: 웹 페이지의 특정 요소를 변수화한다고 보면됨
+    - id, name, class, HTML 태그 등을 매개변수로 받음
+        - id입력시 `#id값` 형식으로 받음
+
+- `요소명.addEventListener()`: 해당하는 요소에 지정된 타입의 이벤트 발생시 지정된 함수 실행
+- 객체 생성 3가지 방식: 리터럴 방식, 생성자 함수 방식, Object.create 방식
+- 실습 간에는 리터럴 방식 사용
+    ```
+    var obejct = {
+        key1: value1,
+        key2: value2,
+        ...
+    }
+    ```
+- `fetch()`: 웹 페이지에서 HTTP 통신을 하는데 사용
+    ```
+    fetch('API_주소', {
+        method: '요청_종류',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(객체)
+    }).then(response => {
+        응답_처리문;
+    });
+    ```
+
+- `JSON.stringify()`는 객체를 입력 받아 JSON 문자열로 변환
+
+---
