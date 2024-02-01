@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>셀프체크 19</title>
+</head>
+<body>
+<h1>Hello, World!</h1>
+<ul>
+    <li class="prerequisite">HTML</li>
+    <li>CSS</li>
+    <li class="prerequisite">JavaScript</li>
+    <li class="prerequisite">Java</li>
+    <li class="prerequisite">SQL</li>
+    <li class="prerequisite">SpringBoot</li>
+</ul>
+<script>
+    {
+      const prerequisites = document.querySelectorAll(".prerequisite");
+      prerequisites.forEach(lecture => {
+        lecture.style.textDecoration = "line-through";
+      });
+    }
+</script>
+</body>
+</html>
